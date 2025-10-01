@@ -1,1 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endangered Alabama Turtles: Presentation Slideshow</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for aesthetic */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb; /* Light gray background (Tailwind gray-50) */
+        }
+        .slide-container {
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .turtle-slide {
+            transition: opacity 0.6s ease-in-out;
+            opacity: 0;
+            display: none;
+            flex-grow: 1;
+        }
+        .turtle-slide.active {
+            opacity: 1;
+            display: block;
+        }
+        /* Updated tracking box style for a softer, modern accent */
+        .tracking-box {
+            @apply p-5 mt-6 bg-teal-50 border-l-4 border-teal-400 rounded-xl shadow-md;
+        }
+        /* Updated header style for better color harmony */
+        .info-header {
+            @apply text-xl font-extrabold text-teal-700 border-b-2 pb-2 mb-4 border-teal-100;
+        }
+        /* Updated navigation button style */
+        .nav-button {
+            @apply px-10 py-3 rounded-full text-white font-bold transition duration-300 shadow-xl;
+            background-color: #0d9488; /* Tailwind Teal-600 */
+        }
+        .nav-button:hover:not(:disabled) {
+            background-color: #0f766e; /* Darker Teal */
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(13, 148, 136, 0.5), 0 4px 6px -2px rgba(13, 148, 136, 0.2);
+        }
+        .nav-button:disabled {
+            @apply bg-gray-300 cursor-not-allowed shadow-none;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-10">
+
+    <div class="max-w-7xl mx-auto">
+        <!-- Header Section (Updated to Teal) -->
+        <header class="text-center mb-8 p-6 bg-teal-600 rounded-3xl shadow-2xl">
+            <h1 class="text-3xl md:text-5xl font-extrabold text-white">Endangered Alabama Turtles: Species Slides</h1>
+            <p class="text-teal-100 mt-2 text-lg" id="slide-indicator">Slide 1 of 5</p>
+        </header>
+
+        <!-- Slide Container (Sharper corners, better shadow) -->
+        <div class="slide-container p-6 md:p-12 bg-white rounded-3xl shadow-xl border border-gray-100 relative">
+
+            <!-- Slide 1: Kemp's Ridley Sea Turtle -->
+            <div id="slide-1" class="turtle-slide">
+                <h2 class="text-3xl font-extrabold text-teal-600 mb-6">1. Kemp's Ridley Sea Turtle (Lepidochelys kempii)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <!-- Main Info Column -->
+                    <div class="md:col-span-2">
+                        <h3 class="info-header">Species Overview & Habitat in AL</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            The smallest and most endangered sea turtle globally. They have an olive-green shell. Alabama's coastal waters are crucial foraging grounds for juveniles and adults. Nesting is rare but documented on Alabama's Gulf shores.
+                        </p>
+
+                        <h3 class="info-header">Nesting & Movement</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            Nesting: Primarily daylight nesting from April to July. They lay 2-3 clutches (approx. 100 eggs each).
+                            Movement: Highly aquatic and migratory. Hatchlings drift on Sargassum mats. Adults are strong swimmers, moving between foraging areas and distant nesting sites.
+                        </p>
+                    </div>
+
+                    <!-- Image and Tracking Column -->
+                    <div class="md:col-span-1">
+                        
+                        <img src="https://placehold.co/400x300/10b981/ffffff?text=Kemp's+Ridley+Sea+Turtle" alt="Kemp's Ridley Sea Turtle" class="w-full rounded-2xl shadow-lg mb-4 object-cover h-48 md:h-64">
+
+                        <div class="tracking-box">
+                            <h4 class="text-lg font-bold text-teal-900">Tracking Data: Nesting Crawl</h4>
+                            <p class="text-teal-800 text-sm mt-2">
+                                Look for alternating flipper marks (often obscured by sand) and a central line from the plastron drag. Tracks are essential for field tracking models.
+                                <br><strong class="text-teal-900">Footprint Type:</strong> Alternating, indistinct flipper prints in sand.
+                            </p>
+                        </div>
+                        <h4 class="text-lg font-bold text-teal-700 mt-6">Useful Links</h4>
+                        <ul class="list-disc ml-5 text-sm text-gray-600">
+                            <li><a href="https://www.fisheries.noaa.gov/species/kemps-ridley-turtle" target="_blank" class="text-blue-600 hover:underline">NOAA Species Overview</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Loggerhead Sea Turtle -->
+            <div id="slide-2" class="turtle-slide">
+                <h2 class="text-3xl font-extrabold text-teal-600 mb-6">2. Loggerhead Sea Turtle (Caretta caretta)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <!-- Main Info Column -->
+                    <div class="md:col-span-2">
+                        <h3 class="info-header">Species Overview & Habitat in AL</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            Named for its large head and strong jaws. It is the most common nesting sea turtle species along Alabama’s Gulf Coast. They inhabit shallow coastal waters and the open ocean.
+                        </p>
+
+                        <h3 class="info-header">Nesting & Movement</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            Nesting: Primarily night nesting from May to late October. They lay large clutches (average ~110 eggs) high up on the beach.
+                            Movement: Powerful, migratory, long-distance swimmers. On land, they crawl slowly using an alternating pattern of front and rear flippers.
+                        </p>
+                    </div>
+
+                    <!-- Image and Tracking Column -->
+                    <div class="md:col-span-1">
+                        
+                        <img src="https://placehold.co/400x300/059669/ffffff?text=Loggerhead+Sea+Turtle" alt="Loggerhead Sea Turtle" class="w-full rounded-2xl shadow-lg mb-4 object-cover h-48 md:h-64">
+
+                        <div class="tracking-box">
+                            <h4 class="text-lg font-bold text-teal-900">Tracking Data: Unique Footprint</h4>
+                            <p class="text-teal-800 text-sm mt-2">
+                                Crawl tracks are wide, distinctive, and often described as messy or wide-swath. The front flipper marks are deep, wide, and create asymmetrical, alternating impressions.
+                                <br><strong class="text-teal-900">Footprint Type:</strong> Wide, deep, alternating flipper marks with central drag.
+                            </p>
+                        </div>
+                        <h4 class="text-lg font-bold text-teal-700 mt-6">Useful Links</h4>
+                        <ul class="list-disc ml-5 text-sm text-gray-600">
+                            <li><a href="https://marinelife.org/turtle/tracking-ahya/" target="_blank" class="text-blue-600 hover:underline">Satellite Tracking Data</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Gopher Tortoise -->
+            <div id="slide-3" class="turtle-slide">
+                <h2 class="text-3xl font-extrabold text-teal-600 mb-6">3. Gopher Tortoise (Gopherus polyphemus)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <!-- Main Info Column -->
+                    <div class="md:col-span-2">
+                        <h3 class="info-header">Species Overview & Habitat in AL</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            A keystone species, famous for digging extensive burrows that shelter hundreds of other animals. Found in the Coastal Plain of Alabama, preferring dry, well-drained, sandy soils (sandhills, longleaf pine forests).
+                        </p>
+
+                        <h3 class="info-header">Nesting & Movement</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            Nesting: Eggs are laid in the summer in nests dug in open, sunny patches of sand, often near the burrow entrance. Clutch size is small (3-15 eggs).
+                            Movement: Terrestrial and slow. Movement is a steady walk. Front limbs are powerful and shovel-like for digging, which defines their track.
+                        </p>
+                    </div>
+
+                    <!-- Image and Tracking Column -->
+                    <div class="md:col-span-1">
+                        
+                        <img src="https://placehold.co/400x300/22c55e/ffffff?text=Gopher+Tortoise+at+Burrow" alt="Gopher Tortoise at Burrow" class="w-full rounded-2xl shadow-lg mb-4 object-cover h-48 md:h-64">
+
+                        <div class="tracking-box">
+                            <h4 class="text-lg font-bold text-teal-900">Tracking Data: Footprint</h4>
+                            <p class="text-teal-800 text-sm mt-2">
+                                Tracks are critical for population monitoring (outside burrows). The front footprint is wide, shovel-shaped with five distinct claws. The rear footprint is more rounded, almost elephantine.
+                                <br><strong class="text-teal-900">Footprint Type:</strong> Shovel-like front prints; round rear prints.
+                            </p>
+                        </div>
+                        <h4 class="text-lg font-bold text-teal-700 mt-6">Useful Links</h4>
+                        <ul class="list-disc ml-5 text-sm text-gray-600">
+                            <li><a href="https://www.fws.gov/sites/default/files/documents/Gopher%20Tortoise%20Survey%20Handbook.pdf" target="_blank" class="text-blue-600 hover:underline">FWS Survey Handbook</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Flattened Musk Turtle -->
+            <div id="slide-4" class="turtle-slide">
+                <h2 class="text-3xl font-extrabold text-teal-600 mb-6">4. Flattened Musk Turtle (Sternotherus depressus)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <!-- Main Info Column -->
+                    <div class="md:col-span-2">
+                        <h3 class="info-header">Species Overview & Habitat in AL</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            A small, freshwater turtle endemic to Alabama (found nowhere else). Restricted to the upper Black Warrior River system. Requires clear, free-flowing water, low silt, and submerged rocks/boulders where it uses its flattened shell to hide in crevices.
+                        </p>
+
+                        <h3 class="info-header">Nesting & Movement</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            Nesting: Two small clutches per year (May to July), typically only 1-4 eggs. Nests are shallow, dug into high sandy banks near the stream's edge.
+                            Movement: A shy, aquatic bottom-dweller. Adults are mainly nocturnal in summer and stick to small home ranges (20-30m) as they crawl along the streambed foraging for mollusks.
+                        </p>
+                    </div>
+
+                    <!-- Image and Tracking Column -->
+                    <div class="md:col-span-1">
+                        
+                        <img src="https://placehold.co/400x300/34d399/ffffff?text=Flattened+Musk+Turtle" alt="Flattened Musk Turtle" class="w-full rounded-2xl shadow-lg mb-4 object-cover h-48 md:h-64">
+
+                        <div class="tracking-box">
+                            <h4 class="text-lg font-bold text-teal-900">Tracking Data: Aquatic Tracks</h4>
+                            <p class="text-teal-800 text-sm mt-2">
+                                Terrestrial footprints are rare. Tracking models must focus on aquatic movements—e.g., micro-tracks or disturbed sediment on the streambed, or identifying the brief nesting crawl on sandy banks.
+                                <br><strong class="text-teal-900">Footprint Type:</strong> Small, webbed-foot impressions in mud/silt; rarely on land.
+                            </p>
+                        </div>
+                        <h4 class="text-lg font-bold text-teal-700 mt-6">Useful Links</h4>
+                        <ul class="list-disc ml-5 text-sm text-gray-600">
+                            <li><a href="https://www.outdooralabama.com/turtles/flattened-musk-turtle" target="_blank" class="text-blue-600 hover:underline">Outdoor AL Species Profile</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: Alabama Red-bellied Turtle -->
+            <div id="slide-5" class="turtle-slide">
+                <h2 class="text-3xl font-extrabold text-teal-600 mb-6">5. Alabama Red-bellied Turtle (Pseudemys rubriventris)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <!-- Main Info Column -->
+                    <div class="md:col-span-2">
+                        <h3 class="info-header">Species Overview & Habitat in AL</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            The official State Reptile of Alabama. A large, herbivorous, freshwater turtle. Restricted primarily to the Mobile-Tensaw River Delta (Mobile and Baldwin counties). Prefers shallow, vegetated backwaters and areas of slightly brackish water.
+                        </p>
+
+                        <h3 class="info-header">Nesting & Movement</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            Nesting: April to early August. Females must leave the water to lay eggs in open, dry, elevated sandy areas (like levee banks and sandbars) to prevent flooding. Clutch size is 4-9 eggs.
+                            Movement: Highly aquatic. Spends most time foraging or basking on logs. Terrestrial movement is limited almost exclusively to the female's nesting crawl.
+                        </p>
+                    </div>
+
+                    <!-- Image and Tracking Column -->
+                    <div class="md:col-span-1">
+                        
+                        <img src="https://placehold.co/400x300/10b981/ffffff?text=Alabama+Red-bellied+Turtle" alt="Alabama Red-bellied Turtle" class="w-full rounded-2xl shadow-lg mb-4 object-cover h-48 md:h-64">
+
+                        <div class="tracking-box">
+                            <h4 class="text-lg font-bold text-teal-900">Tracking Data: Nesting Crawl</h4>
+                            <p class="text-teal-800 text-sm mt-2">
+                                The track is a four-footed, webbed print crawl, with a distinctive, continuous wavy drag line from the plastron/tail. Tracking is focused on finding this crawl from the water's edge to the nest.
+                                <br><strong class="text-teal-900">Footprint Type:</strong> Webbed-foot impressions leading to nest, with a clear central drag.
+                            </p>
+                        </div>
+                        <h4 class="text-lg font-bold text-teal-700 mt-6">Useful Links</h4>
+                        <ul class="list-disc ml-5 text-sm text-gray-600">
+                            <li><a href="https://www.outdooralabama.com/turtles/alabama-red-bellied-turtle" target="_blank" class="text-blue-600 hover:underline">Outdoor AL Species Profile</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- End Slide Content -->
+
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="flex justify-between mt-8">
+            <button id="prevBtn" class="nav-button" onclick="changeSlide(-1)" disabled>
+                &larr; Previous Species
+            </button>
+            <button id="nextBtn" class="nav-button" onclick="changeSlide(1)">
+                Next Species &rarr;
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // Array of slide IDs for easy iteration
+        const slides = [
+            { id: 'slide-1', name: "Kemp's Ridley Sea Turtle" },
+            { id: 'slide-2', name: "Loggerhead Sea Turtle" },
+            { id: 'slide-3', name: "Gopher Tortoise" },
+            { id: 'slide-4', name: "Flattened Musk Turtle" },
+            { id: 'slide-5', name: "Alabama Red-bellied Turtle" }
+        ];
+
+        let currentSlideIndex = 0;
+
+        /**
+         * Displays the specified slide and updates navigation buttons.
+         * @param {number} n - The index of the slide to display.
+         */
+        function showSlide(n) {
+            const slideElements = document.querySelectorAll('.turtle-slide');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const slideIndicator = document.getElementById('slide-indicator');
+
+            // Wrap index to ensure it stays within bounds
+            if (n >= slides.length) {
+                currentSlideIndex = 0;
+            } else if (n < 0) {
+                currentSlideIndex = slides.length - 1;
+            } else {
+                currentSlideIndex = n;
+            }
+
+            // Hide all slides
+            slideElements.forEach(slide => {
+                slide.classList.remove('active');
+                slide.style.display = 'none';
+            });
+
+            // Show the current slide with a slight delay for transition effect
+            const currentSlide = document.getElementById(slides[currentSlideIndex].id);
+            if (currentSlide) {
+                currentSlide.style.display = 'flex'; // Use flex to maintain inner layout
+                setTimeout(() => {
+                    currentSlide.classList.add('active');
+                }, 10);
+            }
+
+            // Update button states
+            prevBtn.disabled = currentSlideIndex === 0;
+            nextBtn.disabled = currentSlideIndex === slides.length - 1;
+
+            // Update indicator text
+            slideIndicator.textContent = `Slide ${currentSlideIndex + 1} of ${slides.length}`;
+        }
+
+        /**
+         * Changes the slide index by a given amount (+1 for next, -1 for previous).
+         * @param {number} n - The amount to change the index by.
+         */
+        function changeSlide(n) {
+            showSlide(currentSlideIndex + n);
+        }
+
+        // Initialize the slideshow on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            showSlide(0);
+        });
+
+    </script>
+
+</body>
+</html>
 
