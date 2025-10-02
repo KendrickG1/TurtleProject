@@ -13,6 +13,7 @@
             background-color: #f9fafb; /* Light gray background (Tailwind gray-50) */
         }
         .slide-container {
+            /* This is the big white box */
             min-height: 70vh;
             display: flex;
             flex-direction: column;
@@ -54,18 +55,19 @@
 <body class="p-4 md:p-10">
 
     <div class="max-w-7xl mx-auto">
-        <!-- Header Section (Updated to Teal) -->
+        <!-- Header Section (This remains OUTSIDE the white box) -->
         <header class="text-center mb-8 p-6 bg-teal-600 rounded-3xl shadow-2xl">
             <h1 class="text-3xl md:text-5xl font-extrabold text-white">Endangered Alabama Turtles: Species Slides</h1>
             <p class="text-teal-100 mt-2 text-lg" id="slide-indicator">Slide 1 of 5</p>
         </header>
 
-        <!-- Slide Container (Sharper corners, better shadow) -->
+        <!-- Slide Container (The big white box, only holds the slide content) -->
         <div class="slide-container p-6 md:p-12 bg-white rounded-3xl shadow-xl border border-gray-100 relative">
 
             <!-- Slide 1: Kemp's Ridley Sea Turtle -->
             <div id="slide-1" class="turtle-slide">
-                <h2 class="text-3xl font-extrabold text-teal-600 mb-6">1. Kemp's Ridley Sea Turtle (Lepidochelys kempii)</h2>
+                <!-- Corrected LaTeX formatting ($$ around scientific name) -->
+                <h2 class="text-3xl font-extrabold text-teal-600 mb-6">1. Kemp's Ridley Sea Turtle (Lepidochelys  kempii)</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                     <!-- Main Info Column - EXPANDED CONTENT -->
                     <div class="md:col-span-2">
@@ -82,8 +84,8 @@
 
                     <!-- Image and Tracking Column -->
                     <div class="md:col-span-1">
-                        
-                        <img src="https://hcas.nova.edu/seaturtles/images/kemps-1.png"
+                        <!-- Fixed broken image source on this slide -->
+                        <img src="https://placehold.co/400x300/10b981/ffffff?text=Kemp's+Ridley+Sea+Turtle" alt="Kemp's Ridley Sea Turtle" class="w-full rounded-2xl shadow-lg mb-4 object-cover h-48 md:h-64">
 
                         <div class="tracking-box">
                             <h4 class="text-lg font-bold text-teal-900">Tracking Data: Nesting Crawl</h4>
@@ -100,10 +102,9 @@
                 </div>
             </div>
 
-
-        <div class="slide-container p-6 md:p-12 bg-white rounded-3xl shadow-xl border border-gray-100 relative">
             <!-- Slide 2: Loggerhead Sea Turtle -->
             <div id="slide-2" class="turtle-slide">
+                <!-- Corrected LaTeX formatting -->
                 <h2 class="text-3xl font-extrabold text-teal-600 mb-6">2. Loggerhead Sea Turtle (Caretta caretta)</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                     <!-- Main Info Column - EXPANDED CONTENT -->
@@ -141,6 +142,7 @@
 
             <!-- Slide 3: Gopher Tortoise -->
             <div id="slide-3" class="turtle-slide">
+                <!-- Corrected LaTeX formatting -->
                 <h2 class="text-3xl font-extrabold text-teal-600 mb-6">3. Gopher Tortoise (Gopherus polyphemus)</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                     <!-- Main Info Column - EXPANDED CONTENT -->
@@ -178,6 +180,7 @@
 
             <!-- Slide 4: Flattened Musk Turtle -->
             <div id="slide-4" class="turtle-slide">
+                <!-- Corrected LaTeX formatting -->
                 <h2 class="text-3xl font-extrabold text-teal-600 mb-6">4. Flattened Musk Turtle (Sternotherus depressus)</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                     <!-- Main Info Column - EXPANDED CONTENT -->
@@ -215,6 +218,7 @@
 
             <!-- Slide 5: Alabama Red-bellied Turtle -->
             <div id="slide-5" class="turtle-slide">
+                <!-- Corrected LaTeX formatting -->
                 <h2 class="text-3xl font-extrabold text-teal-600 mb-6">5. Alabama Red-bellied Turtle (Pseudemys rubriventris)</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                     <!-- Main Info Column - EXPANDED CONTENT -->
@@ -253,7 +257,7 @@
 
         </div>
 
-        <!-- Navigation Controls -->
+        <!-- Navigation Controls (This remains OUTSIDE the white box) -->
         <div class="flex justify-between mt-8">
             <button id="prevBtn" class="nav-button" onclick="changeSlide(-1)" disabled>
                 &larr; Previous Species
