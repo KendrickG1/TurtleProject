@@ -30,9 +30,12 @@
         html {
             scroll-behavior: smooth;
         }
-        /* Custom style for a turtle icon (simple shell shape) */
-        .turtle-icon {
-            transform: rotate(45deg);
+        /* Make modal animations possible */
+        #turtle-detail-modal {
+            transition: opacity 0.3s ease;
+        }
+        #turtle-detail-modal > div {
+            transition: transform 0.3s ease;
         }
     </style>
 </head>
@@ -81,11 +84,12 @@
     <!-- Hero Section -->
     <section id="hero" class="bg-bg-light py-20 sm:py-32">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <!-- Removed the big <h1> text as requested -->
+            <h1 class="text-5xl sm:text-6xl font-extrabold text-primary-blue max-w-4xl mx-auto mb-4">
+                Guardians of the Alabama Waterways
+            </h1>
             <p class="mt-4 text-3xl font-extrabold text-gray-900 max-w-3xl mx-auto mb-8">
                 Protecting and restoring the unique freshwater turtle species of Alabama for future generations.
             </p>
-            <!-- Removed the "Explore Our Services" button as requested -->
         </div>
     </section>
 
@@ -135,7 +139,7 @@
         </div>
     </section>
     
-    <!-- New Species Section -->
+    <!-- Species Section -->
     <section id="species" class="py-16 sm:py-24 bg-bg-light">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
@@ -143,63 +147,61 @@
                 <p class="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">
                     Alabama's Endangered Turtles
                 </p>
+                <p class="text-gray-600 mt-3">Click on any panel below to learn more about the species.</p>
             </div>
 
             <!-- 5 Species Panels Grid -->
-            <!-- Responsive grid: 1 column on mobile, 2 on medium, 5 on large screens -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-
-                <!-- Helper function to create a basic turtle icon -->
-                <div class="hidden" id="turtle-svg">
-                    <svg class="h-6 w-6 turtle-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zM12 4v4m-4 4h8m-4 0v4m4-4h-8m-4 0c1.867 0 3.385-1.518 3.385-3.385s-1.518-3.385-3.385-3.385-3.385 1.518-3.385 3.385S6.133 12 8 12zM16 12c1.867 0 3.385-1.518 3.385-3.385s-1.518-3.385-3.385-3.385-3.385 1.518-3.385 3.385S14.133 12 16 12zM12 18v2m-4-2h8m-4 0v-2"/>
-                    </svg>
-                </div>
                 
-                <!-- Species 1: Alabama Red-bellied Cooter -->
-                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-b-4 border-secondary-teal text-center">
-                    <div class="flex items-center justify-center h-10 w-10 rounded-full bg-secondary-teal/10 text-secondary-teal mx-auto mb-3">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h4m-4 0h4m-4 0v4m4-4v4m0 0h4m-4 0h4m-4 0v4m0-4h4m0-4v4m0 0h4m-4 0h4m-4 0v4"/></svg>
+                <!-- Species 1: Red Bellied Turtle -->
+                <div id="red-bellied-panel" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-b-4 border-secondary-teal text-center cursor-pointer hover:scale-[1.02]">
+                    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-secondary-teal/10 text-secondary-teal mx-auto mb-3 overflow-hidden">
+                        <!-- Placeholder for Red Bellied Turtle Image/Icon -->
+                        <img src="https://placehold.co/64x64/14b8a6/ffffff?text=RT" alt="Photo of a Red Bellied Turtle" class="object-cover w-full h-full rounded-full" onerror="this.onerror=null; this.src='https://placehold.co/64x64/14b8a6/ffffff?text=RT';" >
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">Red-bellied Cooter</h3>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">Red Bellied Turtle</h3>
                     <p class="text-sm font-semibold text-red-600 mb-2">Endangered</p>
                     <p class="text-gray-600 text-sm">Alabama's state reptile, found only in the Mobile-Tensaw River Delta.</p>
                 </div>
 
                 <!-- Species 2: Flattened Musk Turtle -->
-                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-b-4 border-primary-blue text-center">
-                    <div class="flex items-center justify-center h-10 w-10 rounded-full bg-primary-blue/10 text-primary-blue mx-auto mb-3">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4v4m0-4h.01m-6 4a2 2 0 100 4m0-4v4m0-4h.01m12 0a2 2 0 100 4m0-4v4m0-4h.01M6 20h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                <div id="flattened-musk-panel" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-b-4 border-primary-blue text-center cursor-pointer hover:scale-[1.02]">
+                    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-primary-blue/10 text-primary-blue mx-auto mb-3 overflow-hidden">
+                        <!-- Placeholder for Flattened Musk Turtle Image/Icon -->
+                        <img src="https://placehold.co/64x64/1e40af/ffffff?text=FMT" alt="Photo of a Flattened Musk Turtle" class="object-cover w-full h-full rounded-full" onerror="this.onerror=null; this.src='https://placehold.co/64x64/1e40af/ffffff?text=FMT';" >
                     </div>
                     <h3 class="text-lg font-bold text-gray-900 mb-1">Flattened Musk Turtle</h3>
                     <p class="text-sm font-semibold text-orange-600 mb-2">Threatened</p>
                     <p class="text-gray-600 text-sm">Endemic to the Black Warrior River system, sensitive to water quality.</p>
                 </div>
                 
-                <!-- Species 3: Southern Chicken Turtle -->
-                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-b-4 border-secondary-teal text-center">
-                    <div class="flex items-center justify-center h-10 w-10 rounded-full bg-secondary-teal/10 text-secondary-teal mx-auto mb-3">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                <!-- Species 3: Loggerhead Turtle (Loggerhead Panel) -->
+                <div id="loggerhead-panel" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-b-4 border-secondary-teal text-center cursor-pointer hover:scale-[1.02]">
+                    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-secondary-teal/10 text-secondary-teal mx-auto mb-3 overflow-hidden">
+                        <!-- Placeholder for Loggerhead Turtle Image/Icon -->
+                        <img src="https://placehold.co/64x64/14b8a6/ffffff?text=LH" alt="Photo of a Loggerhead Sea Turtle" class="object-cover w-full h-full rounded-full" onerror="this.onerror=null; this.src='https://placehold.co/64x64/14b8a6/ffffff?text=LH';" >
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">Chicken Turtle</h3>
-                    <p class="text-sm font-semibold text-yellow-600 mb-2">Vulnerable</p>
-                    <p class="text-gray-600 text-sm">Relies on temporary ponds and wetlands; threatened by development.</p>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">Loggerhead Turtle</h3>
+                    <p class="text-sm font-semibold text-red-600 mb-2">Endangered</p>
+                    <p class="text-gray-600 text-sm">Large marine turtle that nests on Alabama's Gulf Coast beaches.</p>
                 </div>
 
-                <!-- Species 4: Barbour's Map Turtle -->
-                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-b-4 border-primary-blue text-center">
-                    <div class="flex items-center justify-center h-10 w-10 rounded-full bg-primary-blue/10 text-primary-blue mx-auto mb-3">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                <!-- Species 4: Barbour's Map Turtle (Updated Style) -->
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-b-4 border-primary-blue text-center cursor-pointer hover:scale-[1.02]">
+                    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-primary-blue/10 text-primary-blue mx-auto mb-3 overflow-hidden">
+                        <!-- Placeholder for Barbour's Map Turtle Image/Icon -->
+                        <img src="https://placehold.co/64x64/1e40af/ffffff?text=BMT" alt="Photo of Barbour's Map Turtle" class="object-cover w-full h-full rounded-full" onerror="this.onerror=null; this.src='https://placehold.co/64x64/1e40af/ffffff?text=BMT';" >
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">Barbour's Map Turtle</h3>
-                    <p class="text-sm font-semibold text-orange-600 mb-2">Threatened</p>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">Gopher Turtle</h3>
+                    <p class="text-sm font-semibold text-orange-600 mb-2">Endangered</p>
                     <p class="text-gray-600 text-sm">Inhabits large rivers in the southeast corner of Alabama and adjacent states.</p>
                 </div>
 
-                <!-- Species 5: Gulf Coast Smooth Softshell -->
-                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-b-4 border-secondary-teal text-center">
-                    <div class="flex items-center justify-center h-10 w-10 rounded-full bg-secondary-teal/10 text-secondary-teal mx-auto mb-3">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                <!-- Species 5: Gulf Coast Smooth Softshell (Updated Style) -->
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-b-4 border-secondary-teal text-center cursor-pointer hover:scale-[1.02]">
+                    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-secondary-teal/10 text-secondary-teal mx-auto mb-3 overflow-hidden">
+                        <!-- Placeholder for Smooth Softshell Turtle Image/Icon -->
+                        <img src="https://placehold.co/64x64/14b8a6/ffffff?text=SSS" alt="Photo of a Smooth Softshell Turtle" class="object-cover w-full h-full rounded-full" onerror="this.onerror=null; this.src='https://placehold.co/64x64/14b8a6/ffffff?text=SSS';" >
                     </div>
                     <h3 class="text-lg font-bold text-gray-900 mb-1">Smooth Softshell</h3>
                     <p class="text-sm font-semibold text-blue-600 mb-2">Special Concern</p>
@@ -209,6 +211,155 @@
             </div>
         </div>
     </section>
+
+    <!-- Turtle Detail Modal (Initially Hidden) -->
+    <div id="turtle-detail-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-[100] hidden opacity-0">
+        <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative p-8 md:p-12 transform scale-95">
+            
+            <!-- Close Button -->
+            <button id="close-modal-button" class="absolute top-4 right-4 text-gray-500 hover:text-primary-blue transition duration-300 p-2 rounded-full hover:bg-gray-100">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <!-- Detailed Slide Content 1: Alabama Red-bellied Turtle (Default) -->
+            <div id="slide-1" class="turtle-slide">
+                <h2 class="text-3xl font-extrabold text-secondary-teal mb-6">1. Alabama Red-bellied Turtle ($$Pseudemys\ alabamensis$$)</h2>
+                
+                <p class="text-sm font-semibold text-red-600 mb-6 border-b pb-4">Endangered (State and Federal Protection)</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <!-- Main Info Column -->
+                    <div class="md:col-span-2">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 mt-4">Species Overview & Habitat</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            The Alabama Red-bellied Turtle, Alabama's state reptile, is a large freshwater basking turtle **endemic to the Mobile-Tensaw River Delta**. They are easily recognized by the red or orange coloration on the underside of their shell (plastron), and the cusps (notches) on their upper jaw. They rely on slow-moving waters with abundant aquatic vegetation for food and basking logs.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 mt-4">Key Threats and Conservation</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            The primary threat to this species is **habitat destruction** and **nest predation**. Extensive human development in the Mobile-Tensaw Delta degrades water quality and destroys nesting beaches. Furthermore, their nests are heavily preyed upon by raccoons and other predators. Conservation efforts focus on head-starting programs (raising hatchlings in captivity until they are large enough to avoid predation) and protecting critical nesting sites from development.
+                        </p>
+                    </div>
+
+                    <!-- Image and Tracking Column -->
+                    <div class="md:col-span-1">
+                        <img src="https://placehold.co/300x200/14b8a6/ffffff?text=Red-bellied+Turtle+Image" alt="Illustration of an Alabama Red-bellied Turtle" class="w-full h-auto rounded-lg shadow-md mb-6 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/300x200/14b8a6/ffffff?text=Red-bellied+Turtle+Image';">
+
+                        <div class="bg-bg-light p-4 rounded-lg">
+                            <h4 class="text-lg font-bold text-gray-800">Conservation Action Needed</h4>
+                            <p class="text-gray-600 text-sm mt-2">
+                                Report any sightings of nesting females or protected habitats being disturbed to the Alabama Wildlife and Freshwater Fisheries Division.
+                                <br><strong class="text-primary-blue">Priority:</strong> Nesting beach protection and habitat restoration.
+                            </p>
+                        </div>
+                        <h4 class="text-lg font-bold text-gray-700 mt-6">Useful Links</h4>
+                        <ul class="list-disc ml-5 text-sm text-gray-600">
+                            <li><a href="https://www.outdooralabama.com/turtles/alabama-red-bellied-turtle" target="_blank" class="text-blue-600 hover:underline">Outdoor Alabama Profile</a></li>
+                            <li><a href="#contact" class="text-blue-600 hover:underline">Support Nesting Patrols</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Slide Content 2: Loggerhead Sea Turtle (NEW SLIDE) -->
+            <div id="slide-2" class="turtle-slide" style="display:none;">
+                <h2 class="text-3xl font-extrabold text-secondary-teal mb-6">2. Loggerhead Sea Turtle ($$Caretta\ caretta$$)</h2>
+                
+                <p class="text-sm font-semibold text-orange-600 mb-6 border-b pb-4">Threatened (Federal Protection)</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <!-- Main Info Column - EXPANDED CONTENT -->
+                    <div class="md:col-span-2">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 mt-4">Species Overview & Habitat in AL (Threatened)</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            The Loggerhead is named for its massive head, which supports powerful jaw muscles capable of crushing the shells of prey like clams, conchs, and crabs. They are the most common nesting sea turtle species along Alabama's Gulf Coast, with beaches like those in the Bon Secour National Wildlife Refuge being crucial for reproductive success. Loggerheads occupy coastal waters, estuaries, and the open ocean across the globe, migrating long distances between feeding and nesting grounds. Adults can reach up to 40 inches in shell length and weigh hundreds of pounds.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 mt-4">Nesting, Movement, and Key Threats</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            Nesting Cycle: Nesting occurs mainly at night from May to late October. Females will emerge from the sea to lay several clutches of approximately 110 eggs each, burying them deep in the dry sand above the high tide line. Movement: They are strong, long-distance swimmers. On land, they exhibit a slow, alternating gait. Threats: Major threats include coastal development, which degrades nesting habitat; artificial beachfront lighting, which disorients hatchlings; and plastic pollution, which they often mistake for food. Conservation efforts in Alabama focus on monitoring nests and reducing light pollution.
+                        </p>
+                    </div>
+
+                    <!-- Image and Tracking Column -->
+                    <div class="md:col-span-1">
+                        
+                        <img 
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbt40_xvxOTNuDSQDCpyHmqNoRwYspWUBvBg&s" 
+                            alt="Photo of a Loggerhead Sea Turtle"
+                            class="w-full h-auto rounded-lg shadow-md mb-6 object-cover" 
+                            onerror="this.onerror=null; this.src='https://placehold.co/300x200/14b8a6/ffffff?text=Loggerhead+Turtle+Image';"
+                        >
+
+                        <div class="bg-bg-light p-4 rounded-lg">
+                            <h4 class="text-lg font-bold text-gray-800">Tracking Data: Unique Footprint</h4>
+                            <p class="text-gray-600 text-sm mt-2">
+                                Crawl tracks are wide, distinctive, and often described as messy or wide-swath. The front flipper marks are deep, wide, and create asymmetrical, alternating impressions.
+                                <br><strong class="text-primary-blue">Footprint Type:</strong> Wide, deep, alternating flipper marks with central drag.
+                            </p>
+                        </div>
+                        <h4 class="text-lg font-bold text-gray-700 mt-6">Useful Links</h4>
+                        <ul class="list-disc ml-5 text-sm text-gray-600">
+                            <li><a href="https://marinelife.org/turtle/tracking-ahya/" target="_blank" class="text-blue-600 hover:underline">Satellite Tracking Data</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Slide Content 4: Flattened Musk Turtle -->
+            <div id="slide-4" class="turtle-slide" style="display:none;">
+                <!-- Consistent header styling -->
+                <h2 class="text-3xl font-extrabold text-primary-blue mb-6">3. Flattened Musk Turtle ($$Sternotherus\ depressus$$)</h2>
+                
+                <!-- Consistent status banner styling -->
+                <p class="text-sm font-semibold text-orange-600 mb-6 border-b pb-4">Threatened (State and Federal Protection)</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <!-- Main Info Column - EXPANDED CONTENT -->
+                    <div class="md:col-span-2">
+                        <!-- Converted info-header class to Tailwind -->
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 mt-4">Species Overview & Habitat in AL (Threatened)</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            This small, freshwater turtle is **endemic to Alabama**, meaning it is found nowhere else in the world. It is restricted to the upper tributaries of the **Black Warrior River system**. Its most unique feature is its extremely low, or flattened, shell, which is a perfect adaptation for wedging itself into crevices and under submerged rocks and boulders. This defense mechanism requires a very specific habitat: clear, highly-oxygenated, free-flowing water with little siltation. They are primarily carnivorous, feeding on snails, clams, and aquatic insects they find on the streambed.
+                        </p>
+
+                        <!-- Converted info-header class to Tailwind -->
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 mt-4">Nesting, Movement, and Key Threats</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            Nesting Cycle: Females produce small clutches (typically 1-4 eggs) twice a year, from May to July. They excavate very shallow nests in high, sandy banks near the stream's edge. Movement: They are shy, highly aquatic bottom-dwellers, rarely leaving the water. They have small home ranges, typically foraging along 20-30 meters of streambed. Threats: Because of their limited range and strict habitat requirements, they are highly vulnerable to water quality issues. The biggest threats are siltation from logging and agriculture, coal mining runoff, and the creation of impoundments (dams) that convert fast-flowing streams into still, silty reservoirs.
+                        </p>
+                    </div>
+
+                    <!-- Image and Tracking Column -->
+                    <div class="md:col-span-1">
+                        
+                        <!-- Added consistent Tailwind classes and error handling -->
+                        <img 
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWZh2cTivemqv_EHGgeZvZ_lnDCQsj8dAl3Q&s" 
+                            alt="Photo of a Flattened Musk Turtle under a rock"
+                            class="w-full h-auto rounded-lg shadow-md mb-6 object-cover" 
+                            onerror="this.onerror=null; this.src='https://placehold.co/300x200/1e40af/ffffff?text=Flattened+Musk+Turtle+Image';"
+                        >
+
+                        <!-- Converted tracking-box class to Tailwind -->
+                        <div class="bg-bg-light p-4 rounded-lg">
+                            <h4 class="text-lg font-bold text-gray-800">Tracking Data: Aquatic Tracks</h4>
+                            <p class="text-gray-600 text-sm mt-2">
+                                Terrestrial footprints are rare. Tracking models must focus on aquatic movements—e.g., micro-tracks or disturbed sediment on the streambed, or identifying the brief nesting crawl on sandy banks.
+                                <br><strong class="text-primary-blue">Footprint Type:</strong> Small, webbed-foot impressions in mud/silt; rarely on land.
+                            </p>
+                        </div>
+                        <h4 class="text-lg font-bold text-gray-700 mt-6">Useful Links</h4>
+                        <ul class="list-disc ml-5 text-sm text-gray-600">
+                            <li><a href="https://www.outdooralabama.com/turtles/flattened-musk-turtle" target="_blank" class="text-blue-600 hover:underline">Outdoor AL Species Profile</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- End Slide Content -->
+        </div>
+    </div>
+    <!-- End Modal -->
 
     <!-- Call to Action/About Snippet -->
     <section id="about" class="bg-primary-blue py-16 sm:py-20">
@@ -264,14 +415,14 @@
         </div>
     </footer>
 
-    <!-- JavaScript for Mobile Menu and Footer Year -->
+    <!-- JavaScript for Mobile Menu, Footer Year, and Modal Logic -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             const navLinks = mobileMenu.querySelectorAll('a');
 
-            // Mobile Menu Toggle Logic
+            // --- Mobile Menu Toggle Logic ---
             mobileMenuButton.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
             });
@@ -285,6 +436,74 @@
 
             // Set current year in the footer
             document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // --- Modal Logic for Species Details ---
+            const redBelliedPanel = document.getElementById('red-bellied-panel');
+            // GET NEW LOGGERHEAD PANEL REFERENCE
+            const loggerheadPanel = document.getElementById('loggerhead-panel');
+            const flattenedMuskPanel = document.getElementById('flattened-musk-panel');
+            const modal = document.getElementById('turtle-detail-modal');
+            const closeModalButton = document.getElementById('close-modal-button');
+            const slides = document.querySelectorAll('.turtle-slide'); // Get all content slides
+            
+            // Function to open the modal with transition and show the correct slide
+            const openModal = (slideId) => {
+                // 1. Hide all slides
+                slides.forEach(slide => slide.style.display = 'none');
+                
+                // 2. Show the requested slide
+                const targetSlide = document.getElementById(slideId);
+                if (targetSlide) {
+                    targetSlide.style.display = 'block';
+                }
+
+                // 3. Open the modal container
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    modal.querySelector('.transform').classList.remove('scale-95');
+                }, 10); 
+            };
+
+            // Function to close the modal with transition
+            const closeModal = () => {
+                modal.classList.add('opacity-0');
+                modal.querySelector('.transform').classList.add('scale-95');
+                // Add 'hidden' after the transition completes (300ms defined in CSS)
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300); 
+            };
+
+            // 1. Open modal when the Red Bellied Turtle panel is clicked
+            if (redBelliedPanel) {
+                redBelliedPanel.addEventListener('click', () => openModal('slide-1'));
+            }
+
+            // 2. Open modal when the Loggerhead Turtle panel is clicked
+            if (loggerheadPanel) {
+                loggerheadPanel.addEventListener('click', () => openModal('slide-2'));
+            }
+            
+            // 3. Open modal when the Flattened Musk Turtle panel is clicked
+            if (flattenedMuskPanel) {
+                flattenedMuskPanel.addEventListener('click', () => openModal('slide-4'));
+            }
+
+            // 4. Close modal when the close button is clicked
+            if (closeModalButton) {
+                closeModalButton.addEventListener('click', closeModal);
+            }
+
+            // 5. Close modal when clicking outside the content (on the dark overlay)
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    // Check if the click target is the modal itself (the dark overlay)
+                    if (e.target === modal) {
+                        closeModal();
+                    }
+                });
+            }
         });
     </script>
 </body>
