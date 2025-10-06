@@ -3,194 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Endangered Alabama Turtles: Presentation Slideshow</title>
+    <title>Homepage | Endangered Alabama Turtles</title>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind to use a custom font and color scheme -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#1e40af', // Indigo 700
+                        'secondary-teal': '#14b8a6', // Teal 500
+                        'bg-light': '#f3f4f6', // Gray 100
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <!-- Add Inter font link -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <style>
-        /* Custom styles for aesthetic */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f9fafb; /* Light gray background (Tailwind gray-50) */
+        /* Ensures smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
         }
-        .slide-container {
-            /* This is the big white box */
-            min-height: 70vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        /* Make modal animations possible (for transform and opacity) */
+        #turtle-detail-modal {
+            transition: opacity 0.3s ease;
         }
-        .turtle-slide {
-            transition: opacity 0.6s ease-in-out;
-            opacity: 0;
-            display: none;
-            flex-grow: 1;
-        }
-        .turtle-slide.active {
-            opacity: 1;
-            display: block;
-        }
-        /* Updated tracking box style for a softer, modern accent */
-        .tracking-box {
-            @apply p-5 mt-6 bg-teal-50 border-l-4 border-teal-400 rounded-xl shadow-md;
-        }
-        /* Updated header style for better color harmony */
-        .info-header {
-            @apply text-xl font-extrabold text-teal-700 border-b-2 pb-2 mb-4 border-teal-100;
-        }
-        /* Updated navigation button style */
-        .nav-button {
-            @apply px-10 py-3 rounded-full text-white font-bold transition duration-300 shadow-xl;
-            background-color: #0d9488; /* Tailwind Teal-600 */
-        }
-        .nav-button:hover:not(:disabled) {
-            background-color: #0f766e; /* Darker Teal */
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(13, 148, 136, 0.5), 0 4px 6px -2px rgba(13, 148, 136, 0.2);
-        }
-        .nav-button:disabled {
-            @apply bg-gray-300 cursor-not-allowed shadow-none;
+        #turtle-detail-modal > div {
+            transition: transform 0.3s ease;
         }
     </style>
 </head>
-<body class="p-4 md:p-10">
+<body class="font-sans bg-white text-gray-800">
 
-    <div class="max-w-7xl mx-auto">
-        <!-- Header Section (This remains OUTSIDE the white box) -->
-        <header class="text-center mb-8 p-6 bg-teal-600 rounded-3xl shadow-2xl">
-            <h1 class="text-3xl md:text-5xl font-extrabold text-white">Endangered Alabama Turtles: Species Slides</h1>
-            <p class="text-teal-100 mt-2 text-lg" id="slide-indicator">Slide 1 of 5</p>
-        </header>
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo - Changed to "Endangered Alabama Turtles" -->
+                <a href="#hero" class="text-2xl font-extrabold text-primary-blue hover:text-secondary-teal transition duration-300">
+                    Endangered Alabama Turtles
+                </a>
 
-        <!-- Slide Container (The big white box, only holds the slide content) -->
-        <div class="slide-container p-6 md:p-12 bg-white rounded-3xl shadow-xl border border-gray-100 relative">
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#hero" class="text-gray-600 hover:text-primary-blue font-medium transition duration-150">Home</a>
+                    <a href="#features" class="text-gray-600 hover:text-primary-blue font-medium transition duration-150">Our Mission</a>
+                    <a href="#species" class="text-gray-600 hover:text-primary-blue font-medium transition duration-150">Turtles</a>
+                    <a href="#about" class="text-gray-600 hover:text-primary-blue font-medium transition duration-150">About Us</a>
+                    <a href="#contact" class="px-4 py-1.5 rounded-full bg-primary-blue text-white hover:bg-secondary-teal transition duration-300 shadow-md hover:shadow-lg">Contact</a>
+                </nav>
 
-            <!-- Slide 1: Kemp's Ridley Sea Turtle -->
-            <div id="slide-1" class="turtle-slide">
-                <!-- Corrected LaTeX formatting ($$ around scientific name) -->
-                <h2 class="text-3xl font-extrabold text-teal-600 mb-6">1. Kemp's Ridley Sea Turtle (Lepidochelys  kempii)</h2>
+                <!-- Mobile Menu Button (Hamburger) -->
+                <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                    <!-- Icon for Menu -->
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t">
+                <a href="#hero" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-bg-light">Home</a>
+                <a href="#features" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-bg-light">Our Mission</a>
+                <a href="#species" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-bg-light">Turtles</a>
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-bg-light">About Us</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-secondary-teal hover:bg-primary-blue mt-2">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="bg-bg-light py-20 sm:py-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl sm:text-6xl font-extrabold text-primary-blue max-w-4xl mx-auto mb-4">
+                Guardians of the Alabama Waterways
+            </h1>
+            <p class="mt-4 text-3xl font-extrabold text-gray-900 max-w-3xl mx-auto mb-8">
+                Protecting and restoring the unique freshwater turtle species of Alabama for future generations.
+            </p>
+        </div>
+    </section>
+
+    <!-- Features Section (Our Mission) -->
+    <section id="features" class="py-16 sm:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-base text-secondary-teal font-semibold tracking-wide uppercase">What We Do</h2>
+                <p class="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    The Three Pillars of Conservation
+                </p>
+            </div>
+
+            <!-- Pillars Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+
+                <!-- Feature 1: Research -->
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 border-t-4 border-primary-blue">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-primary-blue/10 text-primary-blue mb-4">
+                        <!-- Icon for Research/Data -->
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0h6"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Scientific Research</h3>
+                    <p class="text-gray-600">We study habitat needs, population dynamics, and threats to gain crucial data for conservation strategies.</p>
+                </div>
+
+                <!-- Feature 2: Habitat Protection -->
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 border-t-4 border-secondary-teal">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-secondary-teal/10 text-secondary-teal mb-4">
+                        <!-- Icon for Protection/Shield -->
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.108a12.024 12.024 0 00-8.913-3.668c-.618 0-1.23.04-1.834.118L3 6l4 4 4-4 4 4 4-4 4-4z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Habitat Restoration</h3>
+                    <p class="text-gray-600">Working to restore vital river, stream, and swamp habitats damaged by pollution or human development.</p>
+                </div>
+
+                <!-- Feature 3: Education & Outreach -->
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 border-t-4 border-primary-blue">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-primary-blue/10 text-primary-blue mb-4">
+                        <!-- Icon for Education/Lightbulb -->
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6a3 3 0 110 6 3 3 0 010-6zM12 17a5 5 0 00-5 5h10a5 5 0 00-5-5z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Community Education</h3>
+                    <p class="text-gray-600">Raising awareness through local school programs and public events to foster responsible stewardship.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Species Section -->
+    <section id="species" class="py-16 sm:py-24 bg-bg-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-base text-primary-blue font-semibold tracking-wide uppercase">The Focus of Our Work</h2>
+                <p class="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    Alabama's Endangered Turtles
+                </p>
+                <p class="text-gray-600 mt-3">Click on any panel below to learn more about the species.</p>
+            </div>
+
+            <!-- 5 Species Panels Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+
+                <!-- Species 1: Red Bellied Turtle -->
+                <div id="red-bellied-panel" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-b-4 border-secondary-teal text-center cursor-pointer hover:scale-[1.02]">
+                    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-secondary-teal/10 text-secondary-teal mx-auto mb-3 overflow-hidden">
+                        <!-- Placeholder for Red Bellied Turtle Image/Icon -->
+                        <img src="https://placehold.co/64x64/14b8a6/ffffff?text=RT" alt="Photo of a Red Bellied Turtle" class="object-cover w-full h-full rounded-full" onerror="this.onerror=null; this.src='https://placehold.co/64x64/14b8a6/ffffff?text=RT';" >
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">Red Bellied Turtle</h3>
+                    <p class="text-sm font-semibold text-red-600 mb-2">Endangered</p>
+                    <p class="text-gray-600 text-sm">Alabama's state reptile, found only in the Mobile-Tensaw River Delta.</p>
+                </div>
+
+                <!-- Species 2: Flattened Musk Turtle -->
+                <div id="flattened-musk-panel" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-b-4 border-primary-blue text-center cursor-pointer hover:scale-[1.02]">
+                    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-primary-blue/10 text-primary-blue mx-auto mb-3 overflow-hidden">
+                        <!-- Placeholder for Flattened Musk Turtle Image/Icon -->
+                        <img src="https://placehold.co/64x64/1e40af/ffffff?text=FMT" alt="Photo of a Flattened Musk Turtle" class="object-cover w-full h-full rounded-full" onerror="this.onerror=null; this.src='https://placehold.co/64x64/1e40af/ffffff?text=FMT';" >
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">Flattened Musk Turtle</h3>
+                    <p class="text-sm font-semibold text-orange-600 mb-2">Threatened</p>
+                    <p class="text-gray-600 text-sm">Endemic to the Black Warrior River system, sensitive to water quality.</p>
+                </div>
+
+                <!-- Species 3: Loggerhead Turtle -->
+                <div id="loggerhead-panel" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-b-4 border-secondary-teal text-center cursor-pointer hover:scale-[1.02]">
+                    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-secondary-teal/10 text-secondary-teal mx-auto mb-3 overflow-hidden">
+                        <!-- Placeholder for Loggerhead Turtle Image/Icon -->
+                        <img src="https://placehold.co/64x64/14b8a6/ffffff?text=LH" alt="Photo of a Loggerhead Sea Turtle" class="object-cover w-full h-full rounded-full" onerror="this.onerror=null; this.src='https://placehold.co/64x64/14b8a6/ffffff?text=LH';" >
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">Loggerhead Turtle</h3>
+                    <p class="text-sm font-semibold text-red-600 mb-2">Endangered</p>
+                    <p class="text-gray-600 text-sm">Large marine turtle that nests on Alabama's Gulf Coast beaches.</p>
+                </div>
+
+                <!-- Species 4: Gopher Tortoise (UPDATED CONTENT) -->
+                <div id="gopher-tortoise-panel" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-b-4 border-primary-blue text-center cursor-pointer hover:scale-[1.02]">
+                    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-primary-blue/10 text-primary-blue mx-auto mb-3 overflow-hidden">
+                        <!-- Placeholder for Gopher Tortoise Image/Icon -->
+                        <img src="https://placehold.co/64x64/1e40af/ffffff?text=GT" alt="Photo of a Gopher Tortoise" class="object-cover w-full h-full rounded-full" onerror="this.onerror=null; this.src='https://placehold.co/64x64/1e40af/ffffff?text=GT';" >
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">Gopher Tortoise</h3>
+                    <p class="text-sm font-semibold text-orange-600 mb-2">Threatened</p>
+                    <p class="text-gray-600 text-sm">A foundational species of the longleaf pine ecosystem, protected across its range.</p>
+                </div>
+
+                <!-- Species 5: Kemp's Ridley Sea Turtle -->
+                <div id="kemp-ridley-panel" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-b-4 border-secondary-teal text-center cursor-pointer hover:scale-[1.02]">
+                    <div class="flex items-center justify-center h-16 w-16 rounded-full bg-secondary-teal/10 text-secondary-teal mx-auto mb-3 overflow-hidden">
+                        <!-- Placeholder for Kemp's Ridley Image/Icon -->
+                        <img src="https://placehold.co/64x64/14b8a6/ffffff?text=KRST" alt="Photo of a Kemp's Ridley Sea Turtle" class="object-cover w-full h-full rounded-full" onerror="this.onerror=null; this.src='https://placehold.co/64x64/14b8a6/ffffff?text=KRST';" >
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">Kemp's Ridley Sea Turtle</h3>
+                    <p class="text-sm font-semibold text-red-700 mb-2">Critically Endangered</p>
+                    <p class="text-gray-600 text-sm">The world's most endangered sea turtle, occasionally found in Alabama's Gulf waters.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Turtle Detail Modal (Initially Hidden) -->
+    <div id="turtle-detail-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-[100] hidden opacity-0">
+        <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative p-8 md:p-12 transform scale-95">
+
+            <!-- Close Button -->
+            <button id="close-modal-button" class="absolute top-4 right-4 text-gray-500 hover:text-primary-blue transition duration-300 p-2 rounded-full hover:bg-gray-100">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <!-- Detailed Slide Content 1: Alabama Red-bellied Turtle (Default) -->
+            <div id="detail-slide-1" class="turtle-slide">
+                <h2 class="text-3xl font-extrabold text-secondary-teal mb-6">1. Alabama Red-bellied Turtle (Pseudemys alabamensis)</h2>
+
+                <p class="text-sm font-semibold text-red-600 mb-6 border-b pb-4">Endangered (State and Federal Protection)</p>
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                    <!-- Main Info Column - EXPANDED CONTENT -->
+                    <!-- Main Info Column -->
                     <div class="md:col-span-2">
-                        <h3 class="info-header">Species Overview & Habitat in AL (Critically Endangered)</h3>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 mt-4">Species Overview & Habitat</h3>
                         <p class="text-gray-700 mb-4 leading-relaxed">
-                            The Kemp's Ridley is the smallest of the world's sea turtles and is currently classified as Critically Endangered. These turtles are recognizable by their distinct olive-green carapace. Juveniles and sub-adults rely heavily on the relatively shallow, nutrient-rich coastal waters of the northern Gulf of Mexico, including those off the coast of Alabama, for critical foraging habitat. They primarily feed on small crabs, mollusks, and other bottom-dwelling invertebrates. The species is famous for its synchronized, mass nesting event called "arribadas," which occurs mainly in Tamaulipas, Mexico.
+                            The Alabama Red-bellied Turtle, Alabama's state reptile, is a large freshwater basking turtle endemic to the Mobile-Tensaw River Delta. They are easily recognized by the red or orange coloration on the underside of their shell (plastron), and the cusps (notches) on their upper jaw. They rely on slow-moving waters with abundant aquatic vegetation for food and basking logs.
                         </p>
 
-                        <h3 class="info-header">Nesting, Movement, and Key Threats</h3>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 mt-4">Key Threats and Conservation</h3>
                         <p class="text-gray-700 mb-4 leading-relaxed">
-                            Nesting Cycle: While mass nesting occurs elsewhere, individual nesting crawls are rare but documented on Alabama's Gulf shores from April to July. Females typically lay 2-3 clutches, each containing around 100 eggs. Movement: They are highly aquatic and migratory. Hatchlings spend their early lives drifting in mats of Sargassum seaweed. Threats: The primary threats include accidental capture in commercial fishing gear (bycatch, especially shrimp trawling), entanglement in marine debris, and oil spills (such as the 2010 Deepwater Horizon spill), which have had a devastating impact on the Gulf population's recovery efforts.
+                            The primary threat to this species is **habitat destruction** and nest predation. Extensive human development in the Mobile-Tensaw Delta degrades water quality and destroys nesting beaches. Furthermore, their nests are heavily preyed upon by raccoons and other predators. Conservation efforts focus on head-starting programs (raising hatchlings in captivity until they are large enough to avoid predation) and protecting critical nesting sites from development.
                         </p>
                     </div>
 
                     <!-- Image and Tracking Column -->
                     <div class="md:col-span-1">
-                        <!-- Fixed broken image source on this slide -->
-                        <img src="data:image/jpeg;base64,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">
+                        <img src="https://placehold.co/300x200/14b8a6/ffffff?text=Red-bellied+Turtle+Image" alt="Illustration of an Alabama Red-bellied Turtle" class="w-full h-auto rounded-lg shadow-md mb-6 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/300x200/14b8a6/ffffff?text=Red-bellied+Turtle+Image';">
 
-                        <div class="tracking-box">
-                            <h4 class="text-lg font-bold text-teal-900">Tracking Data: Nesting Crawl</h4>
-                            <p class="text-teal-800 text-sm mt-2">
-                                Look for alternating flipper marks (often obscured by sand) and a central line from the plastron drag. Tracks are essential for field tracking models.
-                                <br><strong class="text-teal-900">Footprint Type:</strong> Alternating, indistinct flipper prints in sand.
+                        <div class="bg-bg-light p-4 rounded-lg">
+                            <h4 class="text-lg font-bold text-gray-800">Conservation Action Needed</h4>
+                            <p class="text-gray-600 text-sm mt-2">
+                                Report any sightings of nesting females or protected habitats being disturbed to the Alabama Wildlife and Freshwater Fisheries Division.
+                                <br><strong class="text-primary-blue">Priority:</strong> Nesting beach protection and habitat restoration.
                             </p>
                         </div>
-                        <h4 class="text-lg font-bold text-teal-700 mt-6">Useful Links</h4>
+                        <h4 class="text-lg font-bold text-gray-700 mt-6">Useful Links</h4>
                         <ul class="list-disc ml-5 text-sm text-gray-600">
-                            <li><a href="https://www.fisheries.noaa.gov/species/kemps-ridley-turtle" target="_blank" class="text-blue-600 hover:underline">NOAA Species Overview</a></li>
+                            <li><a href="https://www.outdooralabama.com/turtles/alabama-red-bellied-turtle" target="_blank" class="text-blue-600 hover:underline">Outdoor Alabama Profile</a></li>
+                            <li><a href="#contact" class="text-blue-600 hover:underline">Support Nesting Patrols</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- Slide 2: Loggerhead Sea Turtle -->
-            <div id="slide-2" class="turtle-slide">
-                <!-- Corrected LaTeX formatting -->
-                <h2 class="text-3xl font-extrabold text-teal-600 mb-6">2. Loggerhead Sea Turtle (Caretta caretta)</h2>
+            <!-- Detailed Slide Content 2: Flattened Musk Turtle (Mapped from original slide-4) -->
+            <div id="detail-slide-2" class="turtle-slide" style="display:none;">
+                <!-- Consistent header styling -->
+                <h2 class="text-3xl font-extrabold text-primary-blue mb-6">2. Flattened Musk Turtle (Sternotherus depressus)</h2>
+
+                <!-- Consistent status banner styling -->
+                <p class="text-sm font-semibold text-orange-600 mb-6 border-b pb-4">Threatened (State and Federal Protection)</p>
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                     <!-- Main Info Column - EXPANDED CONTENT -->
                     <div class="md:col-span-2">
-                        <h3 class="info-header">Species Overview & Habitat in AL (Threatened)</h3>
-                        <p class="text-gray-700 mb-4 leading-relaxed">
-                            The Loggerhead is named for its massive head, which supports powerful jaw muscles capable of crushing the shells of prey like clams, conchs, and crabs. They are the most common nesting sea turtle species along Alabama's Gulf Coast, with beaches like those in the Bon Secour National Wildlife Refuge being crucial for reproductive success. Loggerheads occupy coastal waters, estuaries, and the open ocean across the globe, migrating long distances between feeding and nesting grounds. Adults can reach up to 40 inches in shell length and weigh hundreds of pounds.
-                        </p>
-
-                        <h3 class="info-header">Nesting, Movement, and Key Threats</h3>
-                        <p class="text-gray-700 mb-4 leading-relaxed">
-                            Nesting Cycle: Nesting occurs mainly at night from May to late October. Females will emerge from the sea to lay several clutches of approximately 110 eggs each, burying them deep in the dry sand above the high tide line. Movement: They are strong, long-distance swimmers. On land, they exhibit a slow, alternating gait. Threats: Major threats include coastal development, which degrades nesting habitat; artificial beachfront lighting, which disorients hatchlings; and plastic pollution, which they often mistake for food. Conservation efforts in Alabama focus on monitoring nests and reducing light pollution.
-                        </p>
-                    </div>
-
-                    <!-- Image and Tracking Column -->
-                    <div class="md:col-span-1">
-                        
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbt40_xvxOTNuDSQDCpyHmqNoRwYspWUBvBg&s">
-
-                        <div class="tracking-box">
-                            <h4 class="text-lg font-bold text-teal-900">Tracking Data: Unique Footprint</h4>
-                            <p class="text-teal-800 text-sm mt-2">
-                                Crawl tracks are wide, distinctive, and often described as messy or wide-swath. The front flipper marks are deep, wide, and create asymmetrical, alternating impressions.
-                                <br><strong class="text-teal-900">Footprint Type:</strong> Wide, deep, alternating flipper marks with central drag.
-                            </p>
-                        </div>
-                        <h4 class="text-lg font-bold text-teal-700 mt-6">Useful Links</h4>
-                        <ul class="list-disc ml-5 text-sm text-gray-600">
-                            <li><a href="https://marinelife.org/turtle/tracking-ahya/" target="_blank" class="text-blue-600 hover:underline">Satellite Tracking Data</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 3: Gopher Tortoise -->
-            <div id="slide-3" class="turtle-slide">
-                <!-- Corrected LaTeX formatting -->
-                <h2 class="text-3xl font-extrabold text-teal-600 mb-6">3. Gopher Tortoise (Gopherus polyphemus)</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                    <!-- Main Info Column - EXPANDED CONTENT -->
-                    <div class="md:col-span-2">
-                        <h3 class="info-header">Species Overview & Habitat in AL (Threatened)</h3>
-                        <p class="text-gray-700 mb-4 leading-relaxed">
-                            The Gopher Tortoise is a vital keystone species found only in the Coastal Plain region of Alabama, south of the Fall Line. They are famous for excavating extensive burrows, which can be up to 48 feet long and 10 feet deep. These burrows provide essential shelter for over 350 other animal species, including the federally endangered Eastern indigo snake and burrowing owls, protecting them from heat, cold, and fire. Their preferred habitat is the open, sunny understory of longleaf pine forests with well-drained, sandy soils. Gopher tortoises can live for 40 to 80 years.
-                        </p>
-
-                        <h3 class="info-header">Nesting, Movement, and Key Threats</h3>
-                        <p class="text-gray-700 mb-4 leading-relaxed">
-                            Nesting Cycle: Nesting occurs in the summer. Eggs (usually 3-15) are laid in a nest dug in an open, sunny patch of sand, often right outside the main burrow entrance. Movement: They are strictly terrestrial and slow-moving, using powerful, shovel-like front limbs to dig. Threats: The primary threat is habitat loss due to urbanization, agriculture, and commercial forestry. Fire suppression is also a problem, as the tortoises need the open, sun-drenched habitat maintained by natural, frequent fires. They are also vulnerable to being killed by vehicles and are sometimes illegally collected as pets.
-                        </p>
-                    </div>
-
-                    <!-- Image and Tracking Column -->
-                    <div class="md:col-span-1">
-                        
-                        <img src="data:image/jpeg;base64,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">
-
-                        <div class="tracking-box">
-                            <h4 class="text-lg font-bold text-teal-900">Tracking Data: Footprint</h4>
-                            <p class="text-teal-800 text-sm mt-2">
-                                Tracks are critical for population monitoring (outside burrows). The front footprint is wide, shovel-shaped with five distinct claws. The rear footprint is more rounded, almost elephantine.
-                                <br><strong class="text-teal-900">Footprint Type:</strong> Shovel-like front prints; round rear prints.
-                            </p>
-                        </div>
-                        <h4 class="text-lg font-bold text-teal-700 mt-6">Useful Links</h4>
-                        <ul class="list-disc ml-5 text-sm text-gray-600">
-                            <li><a href="https://www.fws.gov/sites/default/files/documents/Gopher%20Tortoise%20Survey%20Handbook.pdf" target="_blank" class="text-blue-600 hover:underline">FWS Survey Handbook</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 4: Flattened Musk Turtle -->
-            <div id="slide-4" class="turtle-slide">
-                <!-- Corrected LaTeX formatting -->
-                <h2 class="text-3xl font-extrabold text-teal-600 mb-6">4. Flattened Musk Turtle (Sternotherus depressus)</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                    <!-- Main Info Column - EXPANDED CONTENT -->
-                    <div class="md:col-span-2">
-                        <h3 class="info-header">Species Overview & Habitat in AL (Threatened)</h3>
+                        <!-- Converted info-header class to Tailwind -->
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 mt-4">Species Overview & Habitat in AL (Threatened)</h3>
                         <p class="text-gray-700 mb-4 leading-relaxed">
                             This small, freshwater turtle is endemic to Alabama, meaning it is found nowhere else in the world. It is restricted to the upper tributaries of the Black Warrior River system. Its most unique feature is its extremely low, or flattened, shell, which is a perfect adaptation for wedging itself into crevices and under submerged rocks and boulders. This defense mechanism requires a very specific habitat: clear, highly-oxygenated, free-flowing water with little siltation. They are primarily carnivorous, feeding on snails, clams, and aquatic insects they find on the streambed.
                         </p>
 
-                        <h3 class="info-header">Nesting, Movement, and Key Threats</h3>
+                        <!-- Converted info-header class to Tailwind -->
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 mt-4">Nesting, Movement, and Key Threats</h3>
                         <p class="text-gray-700 mb-4 leading-relaxed">
                             Nesting Cycle: Females produce small clutches (typically 1-4 eggs) twice a year, from May to July. They excavate very shallow nests in high, sandy banks near the stream's edge. Movement: They are shy, highly aquatic bottom-dwellers, rarely leaving the water. They have small home ranges, typically foraging along 20-30 meters of streambed. Threats: Because of their limited range and strict habitat requirements, they are highly vulnerable to water quality issues. The biggest threats are siltation from logging and agriculture, coal mining runoff, and the creation of impoundments (dams) that convert fast-flowing streams into still, silty reservoirs.
                         </p>
@@ -198,17 +287,23 @@
 
                     <!-- Image and Tracking Column -->
                     <div class="md:col-span-1">
-                        
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWZh2cTivemqv_EHGgeZvZ_lnDCQsj8dAl3Q&s">
+                        <!-- Added consistent Tailwind classes and error handling -->
+                        <img
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWZh2cTivemqv_EHGgeZvZ_lnDCQsj8dAl3Q&s"
+                            alt="Photo of a Flattened Musk Turtle under a rock"
+                            class="w-full h-auto rounded-lg shadow-md mb-6 object-cover"
+                            onerror="this.onerror=null; this.src='https://placehold.co/300x200/1e40af/ffffff?text=Flattened+Musk+Turtle+Image';"
+                        >
 
-                        <div class="tracking-box">
-                            <h4 class="text-lg font-bold text-teal-900">Tracking Data: Aquatic Tracks</h4>
-                            <p class="text-teal-800 text-sm mt-2">
+                        <!-- Converted tracking-box class to Tailwind -->
+                        <div class="bg-bg-light p-4 rounded-lg">
+                            <h4 class="text-lg font-bold text-gray-800">Tracking Data: Aquatic Tracks</h4>
+                            <p class="text-gray-600 text-sm mt-2">
                                 Terrestrial footprints are rare. Tracking models must focus on aquatic movements—e.g., micro-tracks or disturbed sediment on the streambed, or identifying the brief nesting crawl on sandy banks.
-                                <br><strong class="text-teal-900">Footprint Type:</strong> Small, webbed-foot impressions in mud/silt; rarely on land.
+                                <br><strong class="text-primary-blue">Footprint Type:</strong> Small, webbed-foot impressions in mud/silt; rarely on land.
                             </p>
                         </div>
-                        <h4 class="text-lg font-bold text-teal-700 mt-6">Useful Links</h4>
+                        <h4 class="text-lg font-bold text-gray-700 mt-6">Useful Links</h4>
                         <ul class="list-disc ml-5 text-sm text-gray-600">
                             <li><a href="https://www.outdooralabama.com/turtles/flattened-musk-turtle" target="_blank" class="text-blue-600 hover:underline">Outdoor AL Species Profile</a></li>
                         </ul>
@@ -216,127 +311,285 @@
                 </div>
             </div>
 
-            <!-- Slide 5: Alabama Red-bellied Turtle -->
-            <div id="slide-5" class="turtle-slide">
-                <!-- Corrected LaTeX formatting -->
-                <h2 class="text-3xl font-extrabold text-teal-600 mb-6">5. Alabama Red-bellied Turtle (Pseudemys rubriventris)</h2>
+            <!-- Detailed Slide Content 3: Loggerhead Sea Turtle (Mapped from original slide-2) -->
+            <div id="detail-slide-3" class="turtle-slide" style="display:none;">
+                <h2 class="text-3xl font-extrabold text-secondary-teal mb-6">3. Loggerhead Sea Turtle (Caretta caretta)</h2>
+
+                <p class="text-sm font-semibold text-red-600 mb-6 border-b pb-4">Endangered (Federal Protection)</p>
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                     <!-- Main Info Column - EXPANDED CONTENT -->
                     <div class="md:col-span-2">
-                        <h3 class="info-header">Species Overview & Habitat in AL (Endangered)</h3>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 mt-4">Species Overview & Habitat in AL (Threatened)</h3>
                         <p class="text-gray-700 mb-4 leading-relaxed">
-                            The Alabama Red-bellied Turtle is a large, beautiful freshwater species and is recognized as the Official State Reptile of Alabama. It is endemic to the Mobile-Tensaw River Delta and Mobile Bay drainage area in Mobile and Baldwin counties. It is primarily herbivorous, feeding on aquatic vegetation, and plays an important ecological role as a seed disperser. They prefer slow-moving water bodies with dense aquatic vegetation and plenty of sun-exposed basking sites, such as logs and sandbars, and can tolerate slightly brackish water near the coast.
+                            The Loggerhead is named for its massive head, which supports powerful jaw muscles capable of crushing the shells of prey like clams, conchs, and crabs. They are the most common nesting sea turtle species along Alabama's Gulf Coast, with beaches like those in the Bon Secour National Wildlife Refuge being crucial for reproductive success. Loggerheads occupy coastal waters, estuaries, and the open ocean across the globe, migrating long distances between feeding and nesting grounds. Adults can reach up to 40 inches in shell length and weigh hundreds of pounds.
                         </p>
 
-                        <h3 class="info-header">Nesting, Movement, and Key Threats</h3>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 mt-4">Nesting, Movement, and Key Threats</h3>
                         <p class="text-gray-700 mb-4 leading-relaxed">
-                            Nesting Cycle: Females nest from April to early August, often creating a unique nest called a "nest plug" to hide the clutch of 4-9 eggs. To prevent nest flooding in the low-lying delta, they often travel significant distances to high, dry areas like man-made levees and sandbars. Movement: They are almost entirely aquatic, with terrestrial movement limited to females seeking nest sites. Threats: The population is severely threatened by habitat degradation from dredging and spoil deposition. Other major issues include heavy nest predation from animals like raccoons (whose populations thrive near human development) and accidental deaths from boat traffic within the Delta's waterways.
+                            Nesting Cycle: Nesting occurs mainly at night from May to late October. Females will emerge from the sea to lay several clutches of approximately 110 eggs each, burying them deep in the dry sand above the high tide line. Movement: They are strong, long-distance swimmers. On land, they exhibit a slow, alternating gait. Threats: Major threats include coastal development, which degrades nesting habitat; artificial beachfront lighting, which disorients hatchlings; and plastic pollution, which they often mistake for food. Conservation efforts in Alabama focus on monitoring nests and reducing light pollution.
                         </p>
                     </div>
 
                     <!-- Image and Tracking Column -->
                     <div class="md:col-span-1">
-                        
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPlHAoEKJEtopG7a0fbv6xgU6E3yCU2EDytA&s">
+                        <img
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbt40_xvxOTNuDSQDCpyHmqNoRwYspWUBvBg&s"
+                            alt="Photo of a Loggerhead Sea Turtle"
+                            class="w-full h-auto rounded-lg shadow-md mb-6 object-cover"
+                            onerror="this.onerror=null; this.src='https://placehold.co/300x200/14b8a6/ffffff?text=Loggerhead+Turtle+Image';"
+                        >
 
-                        <div class="tracking-box">
-                            <h4 class="text-lg font-bold text-teal-900">Tracking Data: Nesting Crawl</h4>
-                            <p class="text-teal-800 text-sm mt-2">
-                                The track is a four-footed, webbed print crawl, with a distinctive, continuous wavy drag line from the plastron/tail. Tracking is focused on finding this crawl from the water's edge to the nest.
-                                <br><strong class="text-teal-900">Footprint Type:</strong> Webbed-foot impressions leading to nest, with a clear central drag.
+                        <div class="bg-bg-light p-4 rounded-lg">
+                            <h4 class="text-lg font-bold text-gray-800">Tracking Data: Unique Footprint</h4>
+                            <p class="text-gray-600 text-sm mt-2">
+                                Crawl tracks are wide, distinctive, and often described as messy or wide-swath. The front flipper marks are deep, wide, and create asymmetrical, alternating impressions.
+                                <br><strong class="text-primary-blue">Footprint Type:</strong> Wide, deep, alternating flipper marks with central drag.
                             </p>
                         </div>
-                        <h4 class="text-lg font-bold text-teal-700 mt-6">Useful Links</h4>
+                        <h4 class="text-lg font-bold text-gray-700 mt-6">Useful Links</h4>
                         <ul class="list-disc ml-5 text-sm text-gray-600">
-                            <li><a href="https://www.outdooralabama.com/turtles/alabama-red-bellied-turtle" target="_blank" class="text-blue-600 hover:underline">Outdoor AL Species Profile</a></li>
+                            <li><a href="https://marinelife.org/turtle/tracking-ahya/" target="_blank" class="text-blue-600 hover:underline">Satellite Tracking Data</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <!-- End Slide Content -->
+
+            <!-- Detailed Slide Content 4: Gopher Tortoise (UPDATED CONTENT) -->
+            <div id="detail-slide-4" class="turtle-slide" style="display:none;">
+                <h2 class="text-3xl font-extrabold text-primary-blue mb-6">4. Gopher Tortoise (Gopherus polyphemus)</h2>
+                <p class="text-sm font-semibold text-orange-600 mb-6 border-b pb-4">Threatened (Federal Protection in Western Alabama)</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <div class="md:col-span-2">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 mt-4">Species Overview & Habitat</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            The Gopher Tortoise is the only tortoise native to the southeastern United States. Unlike the other species on this list, it is a **terrestrial species**, meaning it lives entirely on land. It is considered a **keystone species** because its deep burrows provide shelter for over 350 other species, including snakes, frogs, and mammals. It is found in dry, sandy habitats, primarily the Longleaf Pine ecosystem, across the lower third of Alabama.
+                        </p>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 mt-4">Burrowing, Diet, and Key Threats</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            Burrowing: Using its shovel-like forelimbs, the Gopher Tortoise digs burrows up to 30 feet long and 10 feet deep, maintaining stable temperature and humidity. Diet: They are herbivores, primarily grazing on grasses, legumes, and fruits. Threats: Habitat loss due to development, fragmentation of the longleaf pine forest, and vehicle collisions are the main threats. They are federally protected in their western range (west of the Mobile River), which includes much of Alabama. Conservation efforts focus heavily on prescribed burning to maintain their habitat's open canopy.
+                        </p>
+                    </div>
+                    <div class="md:col-span-1">
+                        <img
+                            src="https://placehold.co/300x200/1e40af/ffffff?text=Gopher+Tortoise+Image"
+                            alt="Photo of a Gopher Tortoise"
+                            class="w-full h-auto rounded-lg shadow-md mb-6 object-cover"
+                            onerror="this.onerror=null; this.src='https://placehold.co/300x200/1e40af/ffffff?text=Gopher+Tortoise+Image';">
+                        <div class="bg-bg-light p-4 rounded-lg">
+                            <h4 class="text-lg font-bold text-gray-800">Conservation Action Needed</h4>
+                            <p class="text-gray-600 text-sm mt-2">
+                                Report any harassment or collection of tortoises. Support land management practices that use prescribed burns to restore the Longleaf Pine forest.
+                                <br><strong class="text-primary-blue">Priority:</strong> Habitat restoration via fire management and protecting burrow systems.
+                            </p>
+                        </div>
+                        <h4 class="text-lg font-bold text-gray-700 mt-6">Useful Links</h4>
+                        <ul class="list-disc ml-5 text-sm text-gray-600">
+                            <li><a href="https://outdooralabama.com/gopher-tortoise" target="_blank" class="text-blue-600 hover:underline">Outdoor AL Profile</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Slide Content 5: Kemp's Ridley Sea Turtle (Completed Content) -->
+            <div id="detail-slide-5" class="turtle-slide" style="display:none;">
+                <h2 class="text-3xl font-extrabold text-secondary-teal mb-6">5. Kemp's Ridley Sea Turtle (Lepidochelys kempii)</h2>
+
+                <p class="text-sm font-semibold text-red-700 mb-6 border-b pb-4">Critically Endangered (Federal Protection)</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <!-- Main Info Column -->
+                    <div class="md:col-span-2">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 mt-4">Species Overview & Habitat</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            The Kemp's Ridley is the smallest and most endangered sea turtle in the world. Adults typically have a round to oval shell and a gray-green color. While their main nesting sites (called arribadas) are primarily in Mexico, young Kemp's Ridleys often use the shallow, nutrient-rich coastal waters of the Gulf of Mexico, including those off Alabama, as critical feeding and developmental areas. They feed mainly on crabs, clams, and other invertebrates found on the seabed.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 mt-4">Key Threats and Conservation</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            The population was decimated by commercial egg harvesting in the past. Today, the biggest threats are incidental capture in fishing gear (bycatch) and oil spills, particularly in the Gulf of Mexico. Their small size makes them especially vulnerable. Conservation focuses on protecting the primary nesting beaches in Rancho Nuevo, Mexico, and requiring the use of Turtle Excluder Devices (TEDs) in shrimp nets to allow turtles to escape.
+                        </p>
+                    </div>
+
+                    <!-- Image and Tracking Column -->
+                    <div class="md:col-span-1">
+                        <img
+                            src="https://placehold.co/300x200/14b8a6/ffffff?text=Kemp's+Ridley+Turtle+Image"
+                            alt="Photo of a Kemp's Ridley Sea Turtle"
+                            class="w-full h-auto rounded-lg shadow-md mb-6 object-cover"
+                            onerror="this.onerror=null; this.src='https://placehold.co/300x200/14b8a6/ffffff?text=Kemp's+Ridley+Turtle+Image';"
+                        >
+
+                        <div class="bg-bg-light p-4 rounded-lg">
+                            <h4 class="text-lg font-bold text-gray-800">Conservation Action Needed</h4>
+                            <p class="text-gray-600 text-sm mt-2">
+                                Support organizations that monitor the Gulf of Mexico coast for stranded turtles or entanglement injuries.
+                                <br><strong class="text-primary-blue">Priority:</strong> Reducing bycatch in commercial fishing and monitoring coastal habitat.
+                            </p>
+                        </div>
+                        <h4 class="text-lg font-bold text-gray-700 mt-6">Useful Links</h4>
+                        <ul class="list-disc ml-5 text-sm text-gray-600">
+                            <li><a href="https://www.fisheries.noaa.gov/species/kemp-ridleys-sea-turtle" target="_blank" class="text-blue-600 hover:underline">NOAA Species Profile</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
         </div>
-
-        <!-- Navigation Controls (This remains OUTSIDE the white box) -->
-        <div class="flex justify-between mt-8">
-            <button id="prevBtn" class="nav-button" onclick="changeSlide(-1)" disabled>
-                &larr; Previous Species
-            </button>
-            <button id="nextBtn" class="nav-button" onclick="changeSlide(1)">
-                Next Species &rarr;
-            </button>
-        </div>
-
     </div>
 
+
+    <!-- Call to Action/About Snippet -->
+    <section id="about" class="bg-primary-blue py-16 sm:py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+            <h2 class="text-3xl sm:text-4xl font-extrabold mb-4">Join Our Conservation Effort!</h2>
+            <p class="text-lg opacity-90 mb-8">
+                Every volunteer hour and every dollar helps us protect Alabama's most vulnerable aquatic species. Find out how you can make a difference today.
+            </p>
+            <a href="#contact" class="inline-block px-8 py-3 text-lg font-semibold text-primary-blue bg-white rounded-full shadow-lg hover:bg-bg-light transition duration-300 transform hover:scale-105">
+                How to Help
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:flex md:justify-between">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold mb-2">Endangered Alabama Turtles</h3>
+                    <p class="text-gray-400">Working toward a safer future for our shelled friends.</p>
+                </div>
+                <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
+                    <div>
+                        <h4 class="text-sm font-semibold uppercase mb-4 text-secondary-teal">Resources</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Blog</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Volunteer Info</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Donate</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-semibold uppercase mb-4 text-secondary-teal">Company</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#about" class="text-gray-400 hover:text-white transition duration-150">About</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Our Team</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Events</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-semibold uppercase mb-4 text-secondary-teal">Legal</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Privacy Policy</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-150">Terms of Use</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-6 border-gray-700 sm:mx-auto lg:my-8" />
+            <div class="text-center">
+                <span class="text-sm text-gray-400">© <span id="current-year"></span> Endangered Alabama Turtles. All Rights Reserved.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Mobile Menu and Interactivity -->
     <script>
-        // Array of slide IDs for easy iteration
-        const slides = [
-            { id: 'slide-1', name: "Kemp's Ridley Sea Turtle" },
-            { id: 'slide-2', name: "Loggerhead Sea Turtle" },
-            { id: 'slide-3', name: "Gopher Tortoise" },
-            { id: 'slide-4', name: "Flattened Musk Turtle" },
-            { id: 'slide-5', name: "Alabama Red-bellied Turtle" }
-        ];
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = mobileMenu.querySelectorAll('a');
 
-        let currentSlideIndex = 0;
-
-        /**
-         * Displays the specified slide and updates navigation buttons.
-         * @param {number} n - The index of the slide to display.
-         */
-        function showSlide(n) {
-            const slideElements = document.querySelectorAll('.turtle-slide');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const slideIndicator = document.getElementById('slide-indicator');
-
-            // Wrap index to ensure it stays within bounds
-            if (n >= slides.length) {
-                currentSlideIndex = 0;
-            } else if (n < 0) {
-                currentSlideIndex = slides.length - 1;
-            } else {
-                currentSlideIndex = n;
-            }
-
-            // Hide all slides
-            slideElements.forEach(slide => {
-                slide.classList.remove('active');
-                slide.style.display = 'none';
+            // Mobile Menu Toggle Logic
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
             });
 
-            // Show the current slide with a slight delay for transition effect
-            const currentSlide = document.getElementById(slides[currentSlideIndex].id);
-            if (currentSlide) {
-                currentSlide.style.display = 'flex'; // Use flex to maintain inner layout
+            // Hide menu when a link is clicked (for smoother navigation)
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // Set current year in the footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            /* --- Modal and Species Interactivity Logic --- */
+            const modal = document.getElementById('turtle-detail-modal');
+            const closeButton = document.getElementById('close-modal-button');
+            const detailSlides = document.querySelectorAll('.turtle-slide');
+
+            // Map panel IDs to their corresponding detail slide IDs
+            const panelMap = {
+                'red-bellied-panel': 'detail-slide-1',
+                'flattened-musk-panel': 'detail-slide-2',
+                'loggerhead-panel': 'detail-slide-3',
+                'gopher-tortoise-panel': 'detail-slide-4', // Updated ID
+                'kemp-ridley-panel': 'detail-slide-5',
+            };
+
+            // Function to open the modal and show the correct slide
+            function openModal(slideId) {
+                // 1. Hide all slides
+                detailSlides.forEach(slide => {
+                    slide.style.display = 'none';
+                });
+
+                // 2. Show the target slide
+                const targetSlide = document.getElementById(slideId);
+                if (targetSlide) {
+                    targetSlide.style.display = 'block';
+                }
+
+                // 3. Display the modal with animation
+                modal.classList.remove('hidden', 'opacity-0');
+                modal.classList.add('opacity-100');
+
+                // Use a timeout to ensure the browser registers the opacity change before applying the transform change
                 setTimeout(() => {
-                    currentSlide.classList.add('active');
+                    modal.querySelector('div').classList.remove('scale-95');
+                    modal.querySelector('div').classList.add('scale-100');
                 }, 10);
+
+                document.body.style.overflow = 'hidden'; // Prevent scrolling background
             }
 
-            // Update button states
-            prevBtn.disabled = currentSlideIndex === 0;
-            nextBtn.disabled = currentSlideIndex === slides.length - 1;
+            // Function to close the modal
+            function closeModal() {
+                // Animation sequence for closing
+                modal.querySelector('div').classList.remove('scale-100');
+                modal.querySelector('div').classList.add('scale-95');
 
-            // Update indicator text
-            slideIndicator.textContent = `Slide ${currentSlideIndex + 1} of ${slides.length}`;
-        }
+                modal.classList.remove('opacity-100');
+                modal.classList.add('opacity-0');
 
-        /**
-         * Changes the slide index by a given amount (+1 for next, -1 for previous).
-         * @param {number} n - The amount to change the index by.
-         */
-        function changeSlide(n) {
-            showSlide(currentSlideIndex + n);
-        }
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300); // Matches CSS transition duration
 
-        // Initialize the slideshow on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            showSlide(0);
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+
+            // Event listeners for species panels
+            Object.keys(panelMap).forEach(panelId => {
+                const panel = document.getElementById(panelId);
+                if (panel) {
+                    panel.addEventListener('click', () => {
+                        openModal(panelMap[panelId]);
+                    });
+                }
+            });
+
+            // Event listener for close button and background click
+            closeButton.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                // Close modal if click is directly on the overlay (not the content)
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
         });
-
     </script>
-
 </body>
 </html>
